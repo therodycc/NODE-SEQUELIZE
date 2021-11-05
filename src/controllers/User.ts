@@ -82,7 +82,20 @@ class UserController {
     }
 
     delete(req: Request, res: Response) {
-
+        const id = req.params.id
+        User.destroy({
+            where: {
+                id
+            }
+        })
+            .then(data => {
+                res.json({ msg: "User deleted", data });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: err?.message || "Some error occurred while deleting the user."
+                });
+            });
     }
 
 }
